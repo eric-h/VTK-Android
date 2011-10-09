@@ -1,7 +1,5 @@
 you will need:
-crystax ndk
-http://www.crystax.net/android/ndk-r4.php
-download and unzip to your home directory
+ndk r6
 
 run the getvtk.sh script, or download and unzip VTK release 5.6.1 somewhere.
 
