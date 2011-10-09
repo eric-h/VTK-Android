@@ -51,15 +51,13 @@ configure_file("${ANDROID_CMAKE_DIR}/Android.mk.master.in" "${JNI_DIR}/Android.m
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/VTK_ndk "${JNI_DIR}/VTK_ndk")
 
-set(NDK_ROOT  "$ENV{HOME}/android-ndk-r4-crystax" CACHE STRING "the crystax ndk directory")
+set(NDK_ROOT  "/opt/android-ndk" CACHE STRING "the ndk directory")
 if(NOT EXISTS ${NDK_ROOT})
 message(FATAL_ERROR "Cannot find your ndk root directory! please download and 
-unzip the android ndk from crystax to the directory specified by NDK_ROOT
-You may download the crystax ndk from: 
-        http://www.crystax.net/android/ndk-r4.php" )
+unzip the android ndk from crystax to the directory specified by NDK_ROOT" )
 endif()
 
-set(J  "2" CACHE STRING "how many processes for make -j <J>")
+set(J  "8" CACHE STRING "how many processes for make -j <J>")
 
 set(NDK_BUILD_ARGS  --directory=${CMAKE_BINARY_DIR} NDK_APPLICATION_MK=Application.mk -j${J} V=1  )
 

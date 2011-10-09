@@ -1,5 +1,18 @@
 APP_BUILD_SCRIPT := $(call my-dir)/Android.mk
 APP_PROJECT_PATH := $(call my-dir)
+
+#To select the static STLport implementation provided with this NDK. Value APP_STL values are the following:
+
+#system -> Use the default minimal C++ runtime library.
+#stlport_static -> Use STLport built as a static library.
+#stlport_shared -> Use STLport built as a shared library.
+#gnustl_static -> Use GNU libstdc++ as a static library.
+
+APP_STL := gnustl_static
+APP_CPPFLAGS := -fexceptions
+APP_CPPFLAGS := -fexceptions
+STLPORT_FORCE_REBUILD := true 
+
 # The ARMv7 is significanly faster due to the use of the hardware FPU
 APP_ABI := ${arm_targets}
 APP_MODULES      := ${APP_MODULES}
