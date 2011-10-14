@@ -31,8 +31,11 @@ set(arm_targets "armeabi-v7a" CACHE string "arm targets, armeabi-v7a is for floa
 set(ANDROID true)
 
 #specify the modules here - needed for ndk to want to build.
-set(APP_MODULES "Common Filtering Imaging")
-set(APP_ANDROID_LIBS "-lCommon -lFiltering  -lImaging")
+#set(APP_MODULES "Common Filtering Imaging IO")
+#set(APP_ANDROID_LIBS "-lCommon -lFiltering  -lImaging -lIO")
+
+set(APP_MODULES "IO")
+set(APP_ANDROID_LIBS "-lIO")
 
 configure_file("${ANDROID_CMAKE_DIR}/Android.mk.master.in" "${CMAKE_BINARY_DIR}/Android.mk")
 configure_file("${ANDROID_CMAKE_DIR}/Application.mk.in" "${CMAKE_BINARY_DIR}/Application.mk")
