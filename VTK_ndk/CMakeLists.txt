@@ -102,8 +102,9 @@ message(${VTK_BIN_ROOT})
 set(cxx_extension .cxx) #used by android ndk LOCAL_CPP_EXTENSION 
 
 
-include(Common.cmake)
-include(Filtering.cmake)
-include(Imaging.cmake)
-include(IO.cmake)
+#include(Common.cmake)
+#include(Filtering.cmake)
+#include(Imaging.cmake)
+#include(IO.cmake)
+include(Graphics.cmake)
 #include(Parallel.cmake)
