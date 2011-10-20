@@ -112,9 +112,6 @@ vtkTriangularTexture.cxx
 vtkVoxelModeller.cxx
 )
 
-#set the includ dirs
-set(lib_includes  "${VTK_src_root} ${VTK_src_root}/Imaging ${VTK_src_root}/Common ${VTK_src_root}/IO ${VTK_src_root}/Filtering")
-set(lib_includes "${lib_includes} ${CMAKE_CURRENT_SOURCE_DIR}/vtk_includes" )
 
 #define some variables used by the define_android_manual macro
 set(cxx_extension .cxx) #used by android ndk LOCAL_CPP_EXTENSION 
