@@ -31,8 +31,12 @@ set(arm_targets "armeabi-v7a" CACHE string "arm targets, armeabi-v7a is for floa
 set(ANDROID true)
 
 #specify the modules here - needed for ndk to want to build.
-set(APP_MODULES "Common Filtering Imaging")
-set(APP_ANDROID_LIBS "-lCommon -lFiltering  -lImaging")
+#set(APP_MODULES "Common Filtering Imaging")
+#set(APP_ANDROID_LIBS "-lCommon -lFiltering  -lImaging")
+
+set(APP_MODULES "IO")
+set(APP_ANDROID_LIBS "-lIO")
+
 
 configure_file("${ANDROID_CMAKE_DIR}/Android.mk.master.in" "${CMAKE_BINARY_DIR}/Android.mk")
 configure_file("${ANDROID_CMAKE_DIR}/Application.mk.in" "${CMAKE_BINARY_DIR}/Application.mk")
@@ -42,9 +46,13 @@ configure_file("${ANDROID_CMAKE_DIR}/default.properties.in" "${CMAKE_BINARY_DIR}
 set(JNI_DIR ${CMAKE_BINARY_DIR}/jni)
 
 #find VTK
-set(VTK_src_root "${CMAKE_SOURCE_DIR}/VTK" CACHE PATH "VTK source root (try the getvtk.sh script)")
+set(VTK_src_root "${CMAKE_SOURCE_DIR}/CMakeExternals/VTK/src" CACHE PATH "VTK source root (try the getvtk.sh script)")
+
+#vtk bin dir configured with cmake
+set(VTK_BIN_ROOT "${CMAKE_SOURCE_DIR}/CMakeExternals/VTK/build")
+
 if(NOT EXISTS ${VTK_src_root})
-message(FATAL_ERROR "Cannot find VTK source root directory!" )
+  message(FATAL_ERROR "Cannot find VTK source root directory!" )
 endif()
 
 configure_file("${ANDROID_CMAKE_DIR}/Android.mk.master.in" "${JNI_DIR}/Android.mk")
@@ -52,12 +60,12 @@ configure_file("${ANDROID_CMAKE_DIR}/Android.mk.master.in" "${JNI_DIR}/Android.m
 add_subdirectory(${CMAKE_SOURCE_DIR}/VTK_ndk "${JNI_DIR}/VTK_ndk")
 
 set(NDK_ROOT  "/opt/android-ndk" CACHE STRING "the ndk directory")
+
 if(NOT EXISTS ${NDK_ROOT})
-message(FATAL_ERROR "Cannot find your ndk root directory! please download and 
-unzip the android ndk from crystax to the directory specified by NDK_ROOT" )
+      message(FATAL_ERROR "Cannot find your ndk root directory! please download and unzip the android ndk from crystax to the directory specified by NDK_ROOT" )
 endif()
 
-set(J  "8" CACHE STRING "how many processes for make -j <J>")
+set(J  "2" CACHE STRING "how many processes for make -j <J>")
 
 set(NDK_BUILD_ARGS  --directory=${CMAKE_BINARY_DIR} NDK_APPLICATION_MK=Application.mk -j${J} V=1  )
 
@@ -65,24 +73,17 @@ set(NDK_BUILD_ARGS  --directory=${CMAKE_BINARY_DIR} NDK_APPLICATION_MK=Applicati
 set(NDK_BUILD_CLEAN_ARGS  --directory=${CMAKE_BINARY_DIR} NDK_APPLICATION_MK=Application.mk  V=1 clean )
 
 ADD_CUSTOM_COMMAND(
-OUTPUT    VTK
-COMMAND   "${NDK_ROOT}/ndk-build" 
-ARGS      ${NDK_BUILD_ARGS}
+  OUTPUT    VTK
+  COMMAND   "${NDK_ROOT}/ndk-build" 
+  ARGS      ${NDK_BUILD_ARGS}
 )
 
 ADD_CUSTOM_TARGET(ndk ALL echo
   DEPENDS VTK
 )
 
-message(STATUS "Make will use make -j${J} - for speeding up build - you may change this in the cache")
-message(STATUS "The NDK directory is ${NDK_ROOT}")
-message(STATUS "ndk-build args: ${NDK_BUILD_ARGS}")
-message(STATUS "just run make - and grab some coffee or tea ;)")
-message(STATUS "The android opencv libs will be located in ${CMAKE_BINARY_DIR}/obj/local/armeabi*/")
-
-
-
-  
-
-
-
+#message(STATUS "Make will use make -j${J} - for speeding up build - you may change this in the cache")
+#message(STATUS "The NDK directory is ${NDK_ROOT}")
+#message(STATUS "ndk-build args: ${NDK_BUILD_ARGS}")
+#message(STATUS "just run make - and grab some coffee or tea ;)")
+#message(STATUS "The android opencv libs will be located in ${CMAKE_BINARY_DIR}/obj/local/armeabi*/")
